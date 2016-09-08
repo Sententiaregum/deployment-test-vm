@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
 set -e
 
+apt-get update
+
 # php7
-apt install -y python-software-properties software-properties-common build-essential git
+apt-get install -y software-properties-common git
 add-apt-repository ppa:ondrej/php
-apt update
-apt install -y php php-mysql php-xml php-mbstring php-zip
+apt-get update
+apt-get install -y php php-mysql php-xml php-mbstring php-zip
 
 # composer
-apt install -y curl
+apt-get install -y curl
 curl -sS https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer
 sudo chown vagrant /usr/local/bin/composer
@@ -16,16 +18,16 @@ sudo chown vagrant /usr/local/bin/composer
 # mysql
 debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'
 debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'
-apt update
-sudo apt -y install mysql-server
+apt-get update
+sudo apt-get -y install mysql-server
 echo "CREATE DATABASE IF NOT EXISTS sententiaregum;" | mysql -u root -proot
 
 # redis
-apt install -y redis-server
+apt-get install -y redis-server
 
 # nodejs
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-apt install -y nodejs
+apt-get install -y nodejs
 npm install -g webpack less node-gyp
 
 # ensure existance of project dir
